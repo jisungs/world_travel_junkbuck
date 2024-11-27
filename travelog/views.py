@@ -4,4 +4,5 @@ from django.shortcuts import render
 
 # Create your views here.
 def travel_log(request):
-    return HttpResponse('hello world')
+    # return HttpResponse('hello world')
+    return render(request, 'travelog/index.html')
