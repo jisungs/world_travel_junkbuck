@@ -8,9 +8,28 @@ import folium
 import base64
 from folium import IFrame
 
+from PIL import Image
+from PIL.ExifTags import TAGS
+
+def test(request):
+    return render(request, 'travelog/test.html')
+
+def get_data_photo(request):
+    image_file = "media/IMG_4751.JPG"
+    image = Image.open(image_file)
+    
+    exif = {}
+    if image._getexif() is not None:
+        for tag, value in image._getexif().items():
+            if tag in TAGS:
+                exif[TAGS[tag]] = value
+    context = {'data' : exif}
+    return render(request, 'travelog/test.html' ,context)
+
+
+
 # Create your views here.
 def travel_log(request):
-
     #folium
 
      #Add Marker
@@ -24,7 +43,7 @@ def travel_log(request):
 
     seogwipo = [33.2532,126.5610]
     
-    #  #지도에 마커추가
+    #지도에 마커추가
     folium.Marker(
         location=geocode,
         tooltip= html,
@@ -46,6 +65,5 @@ def travel_log(request):
     context = {'map_html': map_html}
 
     # rendering
-
 
     return render(request, 'travelog/index.html', context)
