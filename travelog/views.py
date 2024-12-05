@@ -49,13 +49,9 @@ def get_data_photo(request):
             lat = -lat
         if lon_ref != "E":
             lon = -lon
-        
         # Format the GPS coordinates into a human-readable string
         geo_coordinate = "{0}° {1}, {2}° {3}".format(lat, lat_ref, lon, lon_ref)
-        print(geo_coordinate)
-
-        context = {'data' : geo_coordinate}
-    return render(request, 'travelog/test.html' ,context)
+    return geo_coordinate
 
 
 
@@ -66,8 +62,8 @@ def travel_log(request):
      #Add Marker
     encoded = base64.b64encode(open('media/부산도심.jpg', 'rb').read())
     html = '<img src="data:image/png;base64,{}">'.format
-    iframe = IFrame(html(encoded.decode('UTF-8')), width=100, height=100)
-    popup = folium.Popup(iframe, max_width=400)
+    iframe = IFrame(html(encoded.decode('UTF-8')), width=150, height=150)
+    popup = folium.Popup(iframe, max_width=300)
 
     geocode = [33.3786,126.5662]
     m = folium.Map(location=[33.3786,126.5662], zoom_start=10)
