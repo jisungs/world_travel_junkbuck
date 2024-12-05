@@ -8,6 +8,6 @@ app_name = 'travelog'
 
 urlpatterns = [
     path('', views.travel_log, name='travelog'),
-    path('test/', views.test_view, name='test'),
+    path('get_data_photo/', views.get_data_photo, name='get_data_photo'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
