@@ -11,8 +11,8 @@ from folium import IFrame
 from PIL import Image
 from PIL.ExifTags import TAGS
 
-def test(request):
-    return render(request, 'travelog/test.html')
+def test_view(request):
+    return render(request, 'travelog/test.html' )
 
 def get_data_photo(request):
     image_file = "media/IMG_4751.JPG"
