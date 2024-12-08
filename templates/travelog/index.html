@@ -4,19 +4,47 @@
 {%block content%}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">세계여행 기록</h1>
-    <a href="{% url 'travelog:get_data_photo' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+    <a href="" data-toggle="modal" data-target="#recordModal" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
             class="fas fa-download fa-sm text-white-50"></i> 기록하기</a>
 </div>
-
-<div>
-    <a href=""> travel log</a>
-</div>
-
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
 
     {{ map_html|safe }}   
 
+</div>
+
+
+<!-- Record Modal-->
+<div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">여행의 기억을 기록하시겠어요?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">사진을 업로드 해서 여행의 기억을 기록해보세요.
+
+
+        <form action="" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            {{form.as_p}}
+        </form>
+
+    </div>
+
+ 
+      
+    
+    <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">취소하기</button>
+        <a class="btn btn-primary" href="login.html">기록하기</a>
+    </div>
+</div>
+</div>
 </div>
 
 {%endblock%}

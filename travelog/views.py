@@ -1,6 +1,8 @@
 
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from .forms import PhotoForm
+from .models import PhotoMetadata
 
 import os
 import folium
@@ -54,12 +56,25 @@ def get_data_photo(request):
     return geo_coordinate
 
 
+def photo_image_upload(request):
+    if request.moethd == 'POST':
+        form= PhotoForm(request.POST, request.FIELS)
+        if form.is_valid():
+            form.save()
+            return redirect('travelog')
+        else:
+            form=PhotoForm()
+        return redirect('travelog')
+
 
 # Create your views here.
 def travel_log(request):
+
+    
+    
     #folium
 
-     #Add Marker
+    #Add Marker
     encoded = base64.b64encode(open('media/부산도심.jpg', 'rb').read())
     html = '<img src="data:image/png;base64,{}">'.format
     iframe = IFrame(html(encoded.decode('UTF-8')), width=150, height=150)
@@ -92,5 +107,4 @@ def travel_log(request):
     context = {'map_html': map_html}
 
     # rendering
-
     return render(request, 'travelog/index.html', context)

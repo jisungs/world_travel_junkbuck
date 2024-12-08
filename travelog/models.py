@@ -41,10 +41,12 @@ class PhotoMetadata(models.Model):
         verbose_name="Photo Description",
         help_text="이 사진과 관련된 기억을 기록해 보세요"
     )
+    
+    # 이 부분은 업그레이드 필요, 사진이 찍힌 날짜를 메타 데이터에서 불러 오는 코드 필요
     created_at = models.DateTimeField(
         default=timezone.now, 
         verbose_name="Creation Timestamp",
-        help_text="사진을 찍은 날짜는 어떨게 되나요?"
+        help_text="사진을 찍은 날짜는 언제인가요?"
     )
     latitude = models.DecimalField(
         max_digits=9, 
