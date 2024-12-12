@@ -57,23 +57,19 @@ def get_data_photo(request):
 
 
 def photo_image_upload(request):
-    if request.moethd == 'POST':
-        form= PhotoForm(request.POST, request.FIELS)
-        if form.is_valid():
-            form.save()
-            return redirect('travelog')
-        else:
-            form=PhotoForm()
-        return redirect('travelog')
+    # if request.moethd == 'POST':
+    #     form= PhotoForm(request.POST, request.FIELS)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('travelog')
+    #     else:
+    #         form=PhotoForm()
+    return render(request, 'travelog/photo_upload.html',)
 
 
 # Create your views here.
 def travel_log(request):
-
-    
-    
     #folium
-
     #Add Marker
     encoded = base64.b64encode(open('media/부산도심.jpg', 'rb').read())
     html = '<img src="data:image/png;base64,{}">'.format
