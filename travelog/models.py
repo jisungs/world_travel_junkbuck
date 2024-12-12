@@ -4,6 +4,9 @@ from django.utils import timezone
 
 # Create your models here.
 
+class Photo(models.Model):
+    name = models.CharField(max_length=200)
+    travel_main_img = models.ImageField(upload_to='images/')
 
 def photo_upload_path(instance, filename):
     """

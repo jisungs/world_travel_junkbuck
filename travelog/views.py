@@ -1,8 +1,8 @@
 
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
-from .forms import PhotoForm
-from .models import PhotoMetadata
+from .forms import PhotoForm, TravelForm
+from .models import PhotoMetadata, Photo
 
 import os
 import folium
@@ -57,15 +57,17 @@ def get_data_photo(request):
 
 
 def photo_image_upload(request):
-    # if request.moethd == 'POST':
-    #     form= PhotoForm(request.POST, request.FIELS)
-    #     if form.is_valid():
-    #         form.save()
-    #         return redirect('travelog')
-    #     else:
-    #         form=PhotoForm()
-    return render(request, 'travelog/photo_upload.html',)
-
+    form = TravelForm()
+    if request.method == 'POST':
+        form= TravelForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('travelog:main')
+        else:
+            form=TravelForm()
+        return render(request, 'travelog/photo_upload.html', {'form':form})
+    return render(request, 'travelog/photo_upload.html', {'form':form})
+    
 
 # Create your views here.
 def travel_log(request):

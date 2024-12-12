@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 app_name = 'travelog'
 
 urlpatterns = [
-    path('', views.travel_log, name='travelog'),
+    path('', views.travel_log, name='main'),
     path('upload/', views.photo_image_upload, name='photo_upload'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
