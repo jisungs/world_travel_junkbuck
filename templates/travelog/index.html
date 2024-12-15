@@ -5,13 +5,17 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">세계여행 기록</h1>
     <a href="{% url 'travelog:photo_upload' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-            class="fas fa-download fa-sm text-white-50"></i> 기록하기</a>
+            class="fas fa-plane fa-sm text-white-50"></i> 기록하기</a>
 </div>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
 
     {{ map_html|safe }}   
 
+</div>
+
+<div>
+    
 </div>
 
 
@@ -27,18 +31,11 @@ aria-hidden="true">
         </button>
     </div>
     <div class="modal-body">사진을 업로드 해서 여행의 기억을 기록해보세요.
-
-
         <form action="" method="post" enctype="multipart/form-data">
             {%csrf_token%}
             {{form.as_p}}
         </form>
-
     </div>
-
- 
-      
-    
     <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">취소하기</button>
         <a class="btn btn-primary" href="login.html">기록하기</a>
