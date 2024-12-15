@@ -132,11 +132,10 @@ def travel_log(request):
     media_root = settings.MEDIA_ROOT
     gps_datas = process_all_images(media_root)
     
-
-
     #folium
     #Add Marker
-    encoded = base64.b64encode(open('media/부산도심.jpg', 'rb').read())
+    # media/IMG_4751.JPG
+    encoded = base64.b64encode(open('media/부산도심.JPG', 'rb').read())
     html = '<img src="data:image/png;base64,{}">'.format
     iframe = IFrame(html(encoded.decode('UTF-8')), width=150, height=150)
     popup = folium.Popup(iframe, max_width=300)
@@ -148,7 +147,7 @@ def travel_log(request):
     
     #지도에 마커추가
     folium.Marker(
-        location=geocode,
+        location= geocode,
         tooltip= html,
         popup = popup, 
         icon = folium.Icon(color='blue')
@@ -157,16 +156,17 @@ def travel_log(request):
     for item in gps_datas:
         print(item['file'])
         print(item['gps'])
-        encoded = base64.b64encode(open(item['file'], 'rb').read())
+        encoded = base64.b64encode(open(f"{item['file']}", 'rb').read())
         html = '<img src="data:image/png;base64,{}">'.format
         iframe = IFrame(html(encoded.decode('UTF-8')), width=150, height=150)
         popup = folium.Popup(iframe, max_width=300)
+        
         geocode = [item['gps']['latitude'],item['gps']['longitude']]
 
         folium.Marker(
         location=geocode,
         tooltip= html,
-        popup=f'테스',
+        popup=popup,
         icon = folium.Icon(color='blue')
         ).add_to(m)
 
