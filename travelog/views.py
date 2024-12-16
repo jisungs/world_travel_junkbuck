@@ -12,9 +12,38 @@ import folium
 import base64
 from folium import IFrame
 
-from PIL import Image
+from PIL import Image, ExifTags
 from PIL.ExifTags import TAGS, GPSTAGS
 
+def resized_image(input_path, output_path, size):
+    """
+    Resize the image to the specified size while preserving EXIF metadata.
+
+    :param input_path: Path to the input image.
+    :param output_path: Path to save the resized image.
+    :param size: Tuple (width, height) specifying the new size.
+    """
+    try:
+        # 이미지 열기
+        image = Image.open(input_path)
+        
+        # EXIF 데이터 가져오기
+        exif_data = image.info.get('exif', None)
+
+        # 이미지 크기 조정
+        image = image.resize(size, Image.LANCZOS)  # 고품질 리사이즈
+
+        # EXIF 데이터를 유지하며 저장
+        if exif_data:
+            image.save(output_path, exif=exif_data)
+        else:
+            image.save(output_path)
+        
+        print(f"Resized image saved to {output_path}")
+    except Exception as e:
+        print(f"Error resizing image: {e}")
+
+        
 
 def get_data_photo(request):
     image_file = "media/IMG_4751.JPG"
@@ -141,9 +170,7 @@ def travel_log(request):
     popup = folium.Popup(iframe, max_width=300)
 
     geocode = [33.3786,126.5662]
-    m = folium.Map(location=[33.3786,126.5662], zoom_start=10)
-
-    seogwipo = [33.2532,126.5610]
+    m = folium.Map(location=[33.3786,126.5662], zoom_start=6)
     
     #지도에 마커추가
     folium.Marker(
