@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #installed apps
-    'travelog.apps.TravelogConfig'
+    'travelog.apps.TravelogConfig',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [

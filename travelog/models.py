@@ -1,12 +1,18 @@
 import os
 from django.db import models
 from django.utils import timezone
+from sorl.thumbnail import ImageField, get_thumbnail
+from .fields import ThumbnailImageField
+
 
 # Create your models here.
 
 class Photo(models.Model):
     name = models.CharField(max_length=200)
-    travel_main_img = models.ImageField(upload_to='images/')
+    image = ThumbnailImageField(upload_to='thumnail/')
+
+  
+    
 
 def photo_upload_path(instance, filename):
     """

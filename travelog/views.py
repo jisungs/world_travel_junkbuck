@@ -2,6 +2,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
 from .forms import PhotoForm, TravelForm
 from .models import PhotoMetadata, Photo
@@ -15,35 +16,8 @@ from folium import IFrame
 from PIL import Image, ExifTags
 from PIL.ExifTags import TAGS, GPSTAGS
 
-def resized_image(input_path, output_path, size):
-    """
-    Resize the image to the specified size while preserving EXIF metadata.
 
-    :param input_path: Path to the input image.
-    :param output_path: Path to save the resized image.
-    :param size: Tuple (width, height) specifying the new size.
-    """
-    try:
-        # 이미지 열기
-        image = Image.open(input_path)
-        
-        # EXIF 데이터 가져오기
-        exif_data = image.info.get('exif', None)
 
-        # 이미지 크기 조정
-        image = image.resize(size, Image.LANCZOS)  # 고품질 리사이즈
-
-        # EXIF 데이터를 유지하며 저장
-        if exif_data:
-            image.save(output_path, exif=exif_data)
-        else:
-            image.save(output_path)
-        
-        print(f"Resized image saved to {output_path}")
-    except Exception as e:
-        print(f"Error resizing image: {e}")
-
-        
 
 def get_data_photo(request):
     image_file = "media/IMG_4751.JPG"
@@ -130,7 +104,7 @@ def process_all_images(media_root):
     images_with_gps = []
     for root, dirs, files in os.walk(media_root):
         for file in files:
-            if file.lower().endswith(('.jpg', '.jpeg', '.png')):
+            if file.lower().endswith(('.jpg', '.jpeg', '.png','.JPG')):
                 image_path = os.path.join(root, file)
                 gps_info = get_gps_info(image_path)
                 if gps_info:
@@ -145,6 +119,7 @@ def photo_image_upload(request):
     form = TravelForm()
     if request.method == 'POST':
         form= TravelForm(request.POST, request.FILES)
+
         if form.is_valid():
             form.save()
             return redirect('travelog:main')
@@ -158,9 +133,8 @@ def photo_image_upload(request):
 
 # Create your views here.
 def travel_log(request):
-    media_root = settings.MEDIA_ROOT
+    media_root = settings.MEDIA_ROOT    
     gps_datas = process_all_images(media_root)
-    
     #folium
     #Add Marker
     # media/IMG_4751.JPG
@@ -181,9 +155,11 @@ def travel_log(request):
     ).add_to(m)
 
     for item in gps_datas:
-        print(item['file'])
-        print(item['gps'])
-        encoded = base64.b64encode(open(f"{item['file']}", 'rb').read())
+
+        path = item['file'].replace('/Users/jisungs/Documents/dev/sideprojects/world_travel/', '')
+        thumnail_path = path.replace('images', 'thumnail').replace('.JPG', '.thumb.JPG')
+
+        encoded = base64.b64encode(open(f"{thumnail_path}", 'rb').read())
         html = '<img src="data:image/png;base64,{}">'.format
         iframe = IFrame(html(encoded.decode('UTF-8')), width=150, height=150)
         popup = folium.Popup(iframe, max_width=300)

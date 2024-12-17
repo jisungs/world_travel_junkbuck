@@ -9,4 +9,4 @@ class PhotoForm(forms.ModelForm):
 class TravelForm(forms.ModelForm):
     class Meta:
         model = Photo
-        fields = ['name', 'travel_main_img']
+        fields = ['name' ,'image']
