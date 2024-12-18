@@ -140,9 +140,9 @@ def travel_log(request):
     #folium
     #Add Marker
     # media/IMG_4751.JPG
-    # encoded = base64.b64encode(open('media/부산도심.JPG', 'rb').read())
-    # html = '<img src="data:image/png;base64,{}">'.format
-    # iframe = IFrame(html(encoded.decode('UTF-8')), width=150, height=150)
+    encoded = base64.b64encode(open('media/부산도심.JPG', 'rb').read())
+    html = '<img src="data:image/png;base64,{}">'.format
+    iframe = IFrame(html(encoded.decode('UTF-8')), width=150, height=150)
     popup = folium.Popup("제주도")
 
     geocode = [33.3786,126.5662]
