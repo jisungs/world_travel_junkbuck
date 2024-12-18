@@ -27,7 +27,7 @@ SECRET_KEY = config('SECERET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://world-travel-junkbuck.onrender.com']
 
 
 # Application definition
