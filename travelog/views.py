@@ -106,10 +106,12 @@ def process_all_images(media_root):
         for file in files:
             if file.lower().endswith(('.jpg', '.jpeg', '.png','.JPG')):
                 image_path = os.path.join(root, file)
+                 # 파일 이름만 추출
+                file_name = os.path.basename(image_path)
                 gps_info = get_gps_info(image_path)
                 if gps_info:
                     images_with_gps.append({
-                        "file": image_path,
+                        "filename": file_name,
                         "gps": gps_info,
                     })
     return images_with_gps
@@ -155,9 +157,9 @@ def travel_log(request):
     ).add_to(m)
 
     for item in gps_datas:
-
-        path = item['file'].replace('/Users/jisungs/Documents/dev/sideprojects/world_travel/', '')
-        thumnail_path = path.replace('images', 'thumnail').replace('.JPG', '.thumb.JPG')
+        
+        fileName = item['filename']
+        thumnail_path = media_root+"/thumnail/"+ fileName.replace('.JPG', '.thumb.JPG')
 
         encoded = base64.b64encode(open(f"{thumnail_path}", 'rb').read())
         html = '<img src="data:image/png;base64,{}">'.format
