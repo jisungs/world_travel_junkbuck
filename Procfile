@@ -1,1 +1,1 @@
-web:gunicorn world_travel:app
+web:gunicorn config:app
